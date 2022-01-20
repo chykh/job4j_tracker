@@ -17,14 +17,14 @@ public class Triangle {
     }
 
     public boolean exist(double ab, double ac, double bc) {
-        return ((ab + ac) > bc) && ((ab + bc) > ac) && ((bc + ac) > ab);
+        return (ab + ac > bc) && (ab + bc > ac) && (bc + ac > ab);
     }
 
     public double area() {
         double ab = first.distance(second);
         double ac = first.distance(third);
         double bc = second.distance(third);
-        double s = 0;
+        double s = -1;
 
         if (this.exist(ab, ac, bc)) {
             double p = semiPerimeter(ab, ac, bc);
