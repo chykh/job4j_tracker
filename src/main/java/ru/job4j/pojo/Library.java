@@ -11,6 +11,7 @@ public class Library {
         books[1] = book2;
         books[2] = book3;
         books[3] = book4;
+
         for (int i = 0; i < books.length; i++) {
             System.out.println(books[i].getName() + " - " + books[i].getPages());
         }
