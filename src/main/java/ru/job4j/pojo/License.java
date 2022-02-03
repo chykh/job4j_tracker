@@ -9,11 +9,6 @@ public class License {
     private String code;
     private Date created;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(owner, model, code, created);
-    }
-
     public String getOwner() {
         return owner;
     }
@@ -57,6 +52,11 @@ public class License {
         License license = (License) o;
         return Objects.equals(owner, license.owner) && Objects.equals(model, license.model)
                 && Objects.equals(code, license.code) && Objects.equals(created, license.created);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(owner, model, code, created);
     }
 
 }
