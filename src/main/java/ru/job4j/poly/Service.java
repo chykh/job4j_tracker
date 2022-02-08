@@ -1,9 +1,9 @@
 package ru.job4j.poly;
 
 public class Service {
-    private DbStore store;
+    private Store store;
 
-    public Service(DbStore store) {
+    public Service(Store store) {
         this.store = store;
     }
 
@@ -12,7 +12,7 @@ public class Service {
     }
 
     public static void main(String[] args) {
-        DbStore store = new FileStore();
+        Store store = new DbStore();
         Service service = new Service(store);
         service.extract();
     }
