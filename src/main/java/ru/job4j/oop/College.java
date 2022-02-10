@@ -6,4 +6,5 @@ public class College {
         Student student = freshman;
         Object object = freshman;
     }
+
 }
