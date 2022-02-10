@@ -1,10 +1,10 @@
 package ru.job4j.poly;
 
 public class Bus implements Transport {
-    int amount = 10;
-    boolean voyage = false;
-    double money;
-    int ticket = 100;
+    private int amount = 10;
+    private boolean voyage = false;
+    private double money;
+    private int ticket = 100;
 
     @Override
     public void drive() {
