@@ -6,7 +6,6 @@ import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.nullValue;
 public class StartUITest {
 
-
     @Test
     public void whenCreateItem() {
         Input in = new StubInput(new String[] {"0", "Item name", "1"});
