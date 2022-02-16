@@ -11,7 +11,7 @@ public class FactTest {
         Fact.calc(-5);
     }
 
-    @Test
+     @Test
     public void when5() {
         int expected = 120;
         int rsl = Fact.calc(5);
