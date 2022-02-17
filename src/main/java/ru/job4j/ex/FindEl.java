@@ -10,9 +10,37 @@ public class FindEl {
             }
         }
         if (rsl == -1) {
-            throw new ElementNotFoundException();
+            throw new ElementNotFoundException("не найден элемент");
         }
         return rsl;
+    }
+
+    public static boolean sent(String value, String[] abuses) throws ElementAbuseException {
+        boolean rsl = false;
+        for (String abus : abuses) {
+            if (value.equals(abus)) {
+                rsl = true;
+                break;
+            }
+        }
+        if (rsl) {
+            throw new ElementAbuseException("запрещенные ключи");
+        }
+        return rsl;
+    }
+
+    public static void process(String[] values, String key, String[] abuses) {
+        try {
+            if (indexOf(values, key) != -1) {
+                sent(key, abuses);
+            }
+        }   catch (ElementAbuseException ea) {
+            ea.printStackTrace();
+        }   catch (ElementNotFoundException e) {
+            e.printStackTrace();
+        }   catch (Throwable th) {
+            th.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
