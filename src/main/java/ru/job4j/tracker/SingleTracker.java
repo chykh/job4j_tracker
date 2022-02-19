@@ -28,10 +28,6 @@ public final class SingleTracker {
     public Item[] findByName(String key) {
         return tracker.findByName(key);
     }
-    // private int indexOf(int id) {
-   //     tracker.indexOf(id);
-   // }
-   // в tracker - private, что с этим делать? переделать на public?
 
     public boolean replace(int id, Item item) {
         return tracker.replace(id, item);
