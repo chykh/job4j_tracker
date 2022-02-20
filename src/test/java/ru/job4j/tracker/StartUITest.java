@@ -4,7 +4,11 @@ import org.junit.Test;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.nullValue;
+
+import java.time.format.DateTimeFormatter;
 public class StartUITest {
+
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MMMM-EEEE-yyyy HH:mm:ss");
 
     @Test
     public void whenCreateItem() {
@@ -87,6 +91,69 @@ public class StartUITest {
                 + "Wrong input, you can select: 0 .. 0" + ln
                 + "Menu:" + ln
                 + "0. Exit" + ln));
-        }
+    }
+
+    @Test
+    public void whenFindbyId() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Item item = tracker.add(new Item("test"));
+        UserAction[] actions = {new FindByIdAction(out), new Exit()};
+        Input in = new StubInput(new String[]{"0", String.valueOf(item.getId()), "1"});
+        new StartUI(out).init(in, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is("Menu:" + ln
+                           + "0. Find item by id" + ln
+                           + "1. Exit" + ln
+                           + "=== Find item by id ===" + ln
+                           + "Item{id = 1, name = 'test', created = "
+                           + item.getLocalDateTime().format(FORMATTER) + "}" + ln
+                           + "Menu:" + ln
+                           + "0. Find item by id" + ln
+                           + "1. Exit" + ln));
+    }
+
+    @Test
+    public void whenFindbyName() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Item item = tracker.add(new Item("test"));
+        UserAction[] actions = {new FindByNameAction(out), new Exit()};
+        Input in = new StubInput(new String[]{"0", String.valueOf(item.getName()), "1"});
+        new StartUI(out).init(in, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is("Menu:" + ln
+                + "0. Find items by name" + ln
+                + "1. Exit" + ln
+                + "=== Find items by name ===" + ln
+                + "Item{id = 1, name = 'test', created = "
+                + item.getLocalDateTime().format(FORMATTER) + "}" + ln
+                + "Menu:" + ln
+                + "0. Find items by name" + ln
+                + "1. Exit" + ln));
+    }
+
+    @Test
+    public void whenFindbyAllItems() {
+        Output out = new StubOutput();
+        Tracker tracker = new Tracker();
+        Item item = tracker.add(new Item("test"));
+        Item item2 = tracker.add(new Item("test2"));
+        UserAction[] actions = {new ShowItemAction(out), new Exit()};
+        Input in = new StubInput(new String[]{"0", "1"});
+        new StartUI(out).init(in, tracker, actions);
+        String ln = System.lineSeparator();
+        assertThat(out.toString(), is("Menu:" + ln
+                + "0. Show all items" + ln
+                + "1. Exit" + ln
+                + "=== Show all items ===" + ln
+                + "Item{id = 1, name = 'test', created = "
+                + item.getLocalDateTime().format(FORMATTER) + "}" + ln
+                + "Item{id = 2, name = 'test2', created = "
+                + item2.getLocalDateTime().format(FORMATTER) + "}" + ln
+                + "Menu:" + ln
+                + "0. Show all items" + ln
+                + "1. Exit" + ln));
+    }
 
 }
