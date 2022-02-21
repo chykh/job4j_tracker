@@ -5,10 +5,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.nullValue;
 
-import java.time.format.DateTimeFormatter;
 public class StartUITest {
-
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MMMM-EEEE-yyyy HH:mm:ss");
 
     @Test
     public void whenCreateItem() {
@@ -106,8 +103,7 @@ public class StartUITest {
                            + "0. Find item by id" + ln
                            + "1. Exit" + ln
                            + "=== Find item by id ===" + ln
-                           + "Item{id = 1, name = 'test', created = "
-                           + item.getLocalDateTime().format(FORMATTER) + "}" + ln
+                           + item + ln
                            + "Menu:" + ln
                            + "0. Find item by id" + ln
                            + "1. Exit" + ln));
@@ -126,8 +122,7 @@ public class StartUITest {
                 + "0. Find items by name" + ln
                 + "1. Exit" + ln
                 + "=== Find items by name ===" + ln
-                + "Item{id = 1, name = 'test', created = "
-                + item.getLocalDateTime().format(FORMATTER) + "}" + ln
+                + item + ln
                 + "Menu:" + ln
                 + "0. Find items by name" + ln
                 + "1. Exit" + ln));
@@ -147,10 +142,8 @@ public class StartUITest {
                 + "0. Show all items" + ln
                 + "1. Exit" + ln
                 + "=== Show all items ===" + ln
-                + "Item{id = 1, name = 'test', created = "
-                + item.getLocalDateTime().format(FORMATTER) + "}" + ln
-                + "Item{id = 2, name = 'test2', created = "
-                + item2.getLocalDateTime().format(FORMATTER) + "}" + ln
+                + item + ln
+                + item2 + ln
                 + "Menu:" + ln
                 + "0. Show all items" + ln
                 + "1. Exit" + ln));
