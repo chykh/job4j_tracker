@@ -8,4 +8,5 @@ public class NotifyAccount {
         HashSet<Account> rsl = new HashSet<>(accounts);
         return rsl;
     }
+
 }
