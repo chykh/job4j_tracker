@@ -9,7 +9,7 @@ public class GeomProgressionTest {
     @Test
     public void generateAndSum() {
         int rsl = GeomProgression.generateAndSum(1, 3, 10);
-        assertThat(rsl, is(8));
+        assertThat(rsl, is(29524));
     }
 
     @Test
