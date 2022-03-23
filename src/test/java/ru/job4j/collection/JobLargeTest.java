@@ -54,4 +54,5 @@ public class JobLargeTest {
         int result = new JobDescByName().thenComparing(new JobDescByPriority()).compare(j1, j2);
         assertThat(result, greaterThan(0));
     }
+
 }
