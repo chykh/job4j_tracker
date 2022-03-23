@@ -12,12 +12,9 @@ public class User implements Comparable<User> {
     }
 
      public int compareTo(User user) {
-        if (name.compareTo(user.name) == 0) {
-            return Integer.compare(age, user.age);
-        } else {
-            return name.compareTo(user.name);
-        }
-    }
+         int k = name.compareTo(user.name);
+         return (k == 0 ? Integer.compare(age, user.age) : k);
+     }
 
     @Override
     public boolean equals(Object o) {
