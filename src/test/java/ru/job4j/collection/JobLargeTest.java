@@ -41,8 +41,8 @@ public class JobLargeTest {
 
     @Test
     public void testComboJIBNJIBP() {
-        Job j1 = new Job("clean", 10);
-        Job j2 = new Job("end work", 20);
+        Job j1 = new Job("clean", 30);
+        Job j2 = new Job("clean", 20);
         int result = new JobIncByName().thenComparing(new JobDescByPriority()).compare(j1, j2);
         assertThat(result, lessThan(0));
     }
@@ -50,7 +50,7 @@ public class JobLargeTest {
     @Test
     public void testComboJDBNJIBP() {
         Job j1 = new Job("clean", 10);
-        Job j2 = new Job("end work", 20);
+        Job j2 = new Job("clean", 20);
         int result = new JobDescByName().thenComparing(new JobDescByPriority()).compare(j1, j2);
         assertThat(result, greaterThan(0));
     }
