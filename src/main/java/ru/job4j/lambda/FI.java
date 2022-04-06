@@ -17,5 +17,11 @@ public class FI {
 
         Comparator<String> cmpText = (left, right) -> left.compareTo(right);
         Comparator<String> cmpDescSize = (left, right) -> -Integer.compare(left.length(), right.length());
+
+        Comparator<String> numStr = (left, right) -> {
+            int first = Integer.valueOf(left.substring(0, left.indexOf(".")));
+            int second = Integer.valueOf(right.substring(0, right.indexOf(".")));
+            return Integer.compare(first, second);
+        };
     }
 }
