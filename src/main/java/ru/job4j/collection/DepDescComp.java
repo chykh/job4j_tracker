@@ -9,5 +9,4 @@ public class DepDescComp implements Comparator<String> {
         int result = str2[0].compareTo(str1[0]);
         return result != 0 ? result : s1.compareTo(s2);
     }
-
 }
