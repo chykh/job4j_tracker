@@ -24,8 +24,8 @@ public class DiapFunctionsTest  {
 
     @Test
     public void whenQRTFunctionThenQRTResults() {
-        List<Double> result = DiapFunctions.diapason(5, 8, x -> Math.pow(x, 2) + 1);
-        List<Double> expected = Arrays.asList(26D, 37D, 50D);
+        List<Double> result = DiapFunctions.diapason(5, 8, x -> Math.pow(2, x) + 1);
+        List<Double> expected = Arrays.asList(33D, 65D, 129D);
         assertThat(result, is(expected));
     }
 }
