@@ -39,6 +39,5 @@ public class StreamUsage {
                 map(task -> task.spent).
                 reduce(0L, Long::sum);
 
-
     }
 }
