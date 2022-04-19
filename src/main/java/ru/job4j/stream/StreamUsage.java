@@ -26,18 +26,9 @@ public class StreamUsage {
                 new Task("Task #2", 100),
                 new Task("Bug #3", 100)
         );
-        List<Task> bugs = tasks.stream().
+        tasks.stream().
                 filter(task -> task.name.contains("Bug")).
-                collect(Collectors.toList());
-        bugs.forEach(System.out::println);
-
-        List<String> names = tasks.stream().
                 map(task -> task.name).
-                collect(Collectors.toList());
-
-        long total = tasks.stream().
-                map(task -> task.spent).
-                reduce(0L, Long::sum);
-
+                forEach(System.out::println);
     }
 }
