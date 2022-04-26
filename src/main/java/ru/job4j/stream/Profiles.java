@@ -6,12 +6,12 @@ import java.util.stream.Collectors;
 
 public class Profiles {
 
-    public static Comparator<Address> comparator =  new Comparator<>() {
-        @Override
-        public int compare(Address left, Address right) {
-            return left.getCity().compareTo(right.getCity());
-        }
-    };
+  //     public static Comparator<Address> comparator =  new Comparator<>() {
+  //      @Override
+  //      public int compare(Address left, Address right) {
+   //         return left.getCity().compareTo(right.getCity());
+  //      }
+  //  };
 
     public static List<Address> collect(List<Profile> profiles) {
           return profiles.stream()
@@ -22,7 +22,7 @@ public class Profiles {
     public static List<Address> collectSortWithoutDuplicate(List<Profile> profiles) {
         return profiles.stream()
                 .map(Profile::getAddress)
-                .sorted(comparator)
+                .sorted(Comparator.comparing(Address::getCity))
                 .distinct()
                 .collect(Collectors.toList());
     }
