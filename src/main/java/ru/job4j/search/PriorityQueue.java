@@ -22,7 +22,7 @@ public class PriorityQueue {
      * @param task задача которая добавляется в очередь
      */
     public void put(Task task) {
-        for (Task element: tasks) {
+        for (var element: tasks) {
            if (task.getPriority() < element.getPriority()) {
                break;
            }
