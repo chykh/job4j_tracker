@@ -21,49 +21,39 @@ public class BankService {
      }
 
     public Optional<User> findByPassport(String passport) {
-       Optional<User> rsl = Optional.empty();
-       for (User user : users.keySet()) {
-           if (user.getPassport().equals(passport)) {
-               rsl = Optional.of(user);
-               break;
-           }
-       }
-       return rsl;
+        return users.keySet().stream()
+                .filter(user -> user.getPassport().equals(passport))
+                .findFirst();
     }
 
-    public Account findByRequisite(String passport, String requisite) {
+    public Optional<Account> findByRequisite(String passport, String requisite) {
         if (findByPassport(passport).isEmpty()) {
-            return null;
+            return Optional.empty();
         }
         User user = findByPassport(passport).get();
-                    List<Account> accounts = users.get(user);
+        List<Account> accounts = users.get(user);
         return accounts.stream()
             .filter(acc -> requisite.equals(acc.getRequisite()))
-            .findFirst().orElse(null);
+            .findFirst();
     }
 
     public boolean transferMoney(String srcPassport, String srcRequisite,
                                  String destPassport, String destRequisite,
                                  double amount) {
         boolean done = false;
-        Account scrAccount = findByRequisite(srcPassport, srcRequisite);
-        Account destAccount = findByRequisite(destPassport, destRequisite);
+        if (findByRequisite(srcPassport, srcRequisite).isEmpty()
+                || findByRequisite(destPassport, destRequisite).isEmpty()) {
+            return false;
+        }
+        Account scrAccount = findByRequisite(srcPassport, srcRequisite).get();
+        Account destAccount = findByRequisite(destPassport, destRequisite).get();
 
-        if (scrAccount != null && destAccount != null && scrAccount.getBalance() >= amount) {
+        if (scrAccount.getBalance() >= amount) {
             scrAccount.setBalance(scrAccount.getBalance() - amount);
             destAccount.setBalance(destAccount.getBalance() + amount);
             done = true;
         }
         return done;
-    }
-
-    public static void main(String[] args) {
-        BankService bank = new BankService();
-        bank.addUser(new User("321", "Petr Arsentev"));
-        Optional<User> opt = bank.findByPassport("3211");
-        if (opt.isPresent()) {
-            System.out.println(opt.get().getUsername());
-        }
     }
 
 }
