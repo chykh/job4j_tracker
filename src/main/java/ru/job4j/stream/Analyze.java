@@ -1,9 +1,6 @@
 package ru.job4j.stream;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -39,18 +36,18 @@ public class Analyze {
 
     public static Tuple bestStudent(Stream<Pupil> stream) {
                 return stream.map(e -> new Tuple(e.getName(), e.getSubjects().stream().mapToInt(Subject::getScore).sum()))
-                .max((a1, a2) -> (int) a1.getScore() - (int) a2.getScore()).orElse(null);
+                .max(Comparator.comparingDouble(Tuple::getScore)).orElse(null);
     }
 
     public static Tuple bestSubject(Stream<Pupil> stream) {
-         HashMap<String, Double> temp = stream
+         Map<String, Double> temp = stream
                  .flatMap(e -> e.getSubjects().stream())
                  .collect(Collectors.groupingBy(
-                        Subject::getName, LinkedHashMap::new, summingDouble(Subject::getScore)));
+                        Subject::getName, summingDouble(Subject::getScore)));
 
          return temp.entrySet().stream()
                  .map(e -> new Tuple(e.getKey(), e.getValue()))
-                 .max((a1, a2) -> (int) a1.getScore() - (int) a2.getScore())
+                 .max(Comparator.comparingDouble(Tuple::getScore))
                  .orElse(null);
 
     }
