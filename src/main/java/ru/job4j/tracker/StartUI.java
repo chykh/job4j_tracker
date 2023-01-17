@@ -52,16 +52,3 @@ public class StartUI {
         }
     }
 }
-
-    /*
-    public static void main(String[] args) {
-        Output output = new ConsoleOutput();
-        Input input = new ValidateInput(output, new ConsoleInput());
-        Store tracker = new MemTracker();
-
-        List<UserAction> actions = List.of(new CreateAction(output), new ShowItemAction(output),
-                new FindByIdAction(output), new FindByNameAction(output),
-                new DeleteAction(output), new ReplaceAction(output), new Exit());
-        new StartUI(output).init(input, tracker, actions);
-    }
-     */
