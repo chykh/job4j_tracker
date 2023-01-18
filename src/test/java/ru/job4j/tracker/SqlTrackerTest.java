@@ -1,19 +1,19 @@
 package ru.job4j.tracker;
 
-import liquibase.pro.packaged.I;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import ru.job4j.tracker.Item;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Properties;
-import static org.assertj.core.api.Assertions.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SqlTrackerTest {
 
@@ -51,8 +51,7 @@ public class SqlTrackerTest {
     @Test
     public void whenSameItemAndFindByGeneratedIdThenMustBeTheSame() {
         SqlTracker tracker = new SqlTracker(connection);
-        Item item = new Item("item");
-        tracker.add(item);
+        Item item = tracker.add(new Item("item"));
         assertThat(tracker.findById(item.getId())).isEqualTo(item);
     }
 
@@ -60,61 +59,52 @@ public class SqlTrackerTest {
     public void whenSameNameAndFindByNameThenMustBeTheSame() {
         SqlTracker tracker = new SqlTracker(connection);
         String name = "first";
-        Item item = new Item(name);
-        tracker.add(item);
-        assertThat(tracker.findByName(name).contains(item));
+        Item item = tracker.add(new Item(name));
+        assertThat(tracker.findByName(name)).contains(item);
     }
 
     @Test
     public void whenSameListAndFindAllThenMustBeTheSame() {
         SqlTracker tracker = new SqlTracker(connection);
-        Item first = new Item("first");
-        Item second = new Item("second");
-        Item third = new Item("third");
-        tracker.add(first);
-        tracker.add(second);
-        tracker.add(third);
+        Item first = tracker.add(new Item("first"));
+        Item second = tracker.add(new Item("second"));
+        Item third = tracker.add(new Item("third"));
         assertThat(tracker.findAll()).containsExactly(first, second, third);
     }
 
     @Test
     public void whenPartListAndDeletedFindAllThenMustBeTheSame() {
         SqlTracker tracker = new SqlTracker(connection);
-        Item first = new Item("first");
-        Item second = new Item("second");
-        Item third = new Item("third");
-        tracker.add(first);
-        tracker.add(second);
-        tracker.add(third);
+        Item first = tracker.add(new Item("first"));
+        Item second = tracker.add(new Item("second"));
+        int id = second.getId();
+        Item third = tracker.add(new Item("third"));
         tracker.delete(second.getId());
         assertThat(tracker.findAll()).containsExactly(first, third);
+        assertThat(tracker.findById(id)).isNull();
     }
 
     @Test
     public void whenReplacedElementAndListThenMustBeTheSame() {
         SqlTracker tracker = new SqlTracker(connection);
-        Item first = new Item("first");
-        Item second = new Item("second");
-        Item third = new Item("third");
+        Item first = tracker.add(new Item("first"));
+        Item second = tracker.add(new Item("second"));
+        Item third = tracker.add(new Item("third"));
         Item fourth = new Item("fourth");
-        tracker.add(first);
-        tracker.add(second);
-        tracker.add(third);
+        int id = second.getId();
         tracker.replace(second.getId(), fourth);
         assertThat(tracker.findAll()).containsExactly(first, fourth, third);
+        assertThat(tracker.findById(id).getName()).isEqualTo("fourth");
+
     }
 
     @Test
     public void whenAddedElementAndListThenMustBeTheSame() {
         SqlTracker tracker = new SqlTracker(connection);
-        Item first = new Item("first");
-        Item second = new Item("second");
-        Item third = new Item("third");
-        Item fourth = new Item("fourth");
-        tracker.add(first);
-        tracker.add(second);
-        tracker.add(third);
-        tracker.add(fourth);
+        Item first = tracker.add(new Item("first"));
+        Item second = tracker.add(new Item("second"));
+        Item third = tracker.add(new Item("third"));
+        Item fourth = tracker.add(new Item("fourth"));
         assertThat(tracker.findAll()).containsExactly(first, second, third, fourth);
     }
 }
