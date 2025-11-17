@@ -1,5 +1,12 @@
 package ru.job4j.tracker;
 
+import ru.job4j.tracker.action.*;
+import ru.job4j.tracker.input.ConsoleInput;
+import ru.job4j.tracker.input.Input;
+import ru.job4j.tracker.input.ValidateInput;
+import ru.job4j.tracker.output.ConsoleOutput;
+import ru.job4j.tracker.output.Output;
+
 import java.util.List;
 
 public class StartUI {
@@ -46,7 +53,7 @@ public class StartUI {
                     new FindByIdAction(output),
                     new FindByNameAction(output),
                     new ShowItemAction(output),
-                    new Exit()
+                    new ExitAction()
             );
             new StartUI(output).init(input, tracker, actions);
         } catch (Exception e) {
