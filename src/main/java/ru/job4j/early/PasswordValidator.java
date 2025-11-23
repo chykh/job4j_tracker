@@ -3,62 +3,6 @@ package ru.job4j.early;
 public class PasswordValidator {
     private static final String[] FORBIDDEN = {"qwerty", "12345", "password", "admin", "user"};
 
-    public static boolean hasUpCase(String password) {
-        boolean result = false;
-        for (char symbol : password.toCharArray()) {
-            if (Character.isUpperCase(symbol)) {
-                result = true;
-                break;
-            }
-        }
-        return result;
-    }
-
-    public static boolean hasLowCase(String password) {
-        boolean result = false;
-        for (char symbol : password.toCharArray()) {
-            if (Character.isLowerCase(symbol)) {
-                result = true;
-                break;
-            }
-        }
-        return result;
-    }
-
-    public static boolean hasDigit(String password) {
-        boolean result = false;
-        for (char symbol : password.toCharArray()) {
-            if (Character.isDigit(symbol)) {
-                result = true;
-                break;
-            }
-        }
-        return result;
-    }
-
-    public static boolean hasSpecial(String password) {
-        boolean result = false;
-        for (char symbol : password.toCharArray()) {
-            if (!Character.isLetterOrDigit(symbol)) {
-                result = true;
-                break;
-            }
-        }
-        return result;
-    }
-
-    public static boolean hasSpecialSubString(String password) {
-        boolean result = false;
-        password = password.toLowerCase();
-        for (String subString : FORBIDDEN) {
-            if (password.contains(subString)) {
-                result = true;
-                break;
-            }
-        }
-        return result;
-    }
-
     public static String validate(String password) {
         if (password == null) {
             throw new IllegalArgumentException("Password can't be null");
@@ -69,28 +13,59 @@ public class PasswordValidator {
                     "Password should be length [8, 32]"
             );
         }
+        boolean hasUpCase = false;
+        boolean hasLowCase = false;
+        boolean hasDigit = false;
+        boolean hasSpecial = false;
+        boolean hasForbiddenSubString = false;
 
-        if (!hasUpCase(password)) {
+        for (char symbol : password.toCharArray()) {
+            if (Character.isUpperCase(symbol)) {
+                hasUpCase = true;
+            }
+            if (Character.isLowerCase(symbol)) {
+                hasLowCase = true;
+            }
+            if (Character.isDigit(symbol)) {
+                hasDigit = true;
+            }
+            if (!Character.isLetterOrDigit(symbol)) {
+                hasSpecial = true;
+            }
+            if (hasUpCase && hasLowCase && hasDigit && hasSpecial) {
+                break;
+            }
+        }
+
+        String temp = password.toLowerCase();
+        for (String subString : FORBIDDEN) {
+            if (temp.contains(subString)) {
+                hasForbiddenSubString = true;
+                break;
+            }
+        }
+
+        if (!hasUpCase) {
             throw new IllegalArgumentException(
                     "Password should contain at least one uppercase letter"
             );
         }
-        if (!hasLowCase(password)) {
+        if (!hasLowCase) {
             throw new IllegalArgumentException(
                     "Password should contain at least one lowercase letter"
             );
         }
-        if (!hasDigit(password)) {
+        if (!hasDigit) {
             throw new IllegalArgumentException(
                     "Password should contain at least one figure"
             );
         }
-        if (!hasSpecial(password)) {
+        if (!hasSpecial) {
             throw new IllegalArgumentException(
                     "Password should contain at least one special symbol"
             );
         }
-        if (hasSpecialSubString(password)) {
+        if (hasForbiddenSubString) {
             throw new IllegalArgumentException(
                     "Password shouldn't contain substrings: qwerty, 12345, password, admin, user"
             );
