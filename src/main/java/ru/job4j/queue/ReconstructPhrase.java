@@ -1,5 +1,4 @@
 package ru.job4j.queue;
-
 import java.util.Deque;
 
 public class ReconstructPhrase {
@@ -14,22 +13,22 @@ public class ReconstructPhrase {
 
     private String getEvenElements() {
         StringBuilder builder = new StringBuilder();
-        Character character;
-        do {
-            character = evenElements.pollFirst();
-            if (character != null) {
-                builder.append(character);
+        int size = evenElements.size();
+        Character letter;
+        for (int i = 0; i < size; i++) {
+            letter = evenElements.pollFirst();
+            if (i % 2 == 0) {
+                builder.append(letter);
             }
-        } while (evenElements.pollFirst() != null);
+        }
         return builder.toString();
     }
 
     private String getDescendingElements() {
         StringBuilder builder = new StringBuilder();
-        Character character = descendingElements.pollLast();
-        while (character != null) {
-            builder.append(character);
-            character = descendingElements.pollLast();
+        int size = descendingElements.size();
+        for (int i = 0; i < size; i++) {
+            builder.append(descendingElements.pollLast());
         }
         return builder.toString();
     }
