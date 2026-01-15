@@ -8,7 +8,7 @@ import static java.util.Collections.sort;
 
 public class AnalyzeByMap {
     public static double averageScore(List<Pupil> pupils) {
-        double result = 0;
+        double result;
         double totalScore = 0;
         List<Label> averagePupils = averageScoreByPupil(pupils);
         for (Label label : averagePupils) {
@@ -23,7 +23,7 @@ public class AnalyzeByMap {
         for (Pupil pupil : pupils) {
             double score = 0;
             for (Subject subject : pupil.subjects()) {
-                score = score + subject.score() ;
+                score = score + subject.score();
             }
             double averageScore = score / pupil.subjects().size();
             result.add(new Label(pupil.name(), averageScore));
@@ -32,7 +32,7 @@ public class AnalyzeByMap {
     }
 
     public static List<Label> averageScoreBySubject(List<Pupil> pupils) {
-        ArrayList<Label> result = new ArrayList<>();
+        List<Label> result = new ArrayList<>();
         Map<String, Integer> map = new HashMap<>();
         for (Pupil pupil : pupils) {
             for (Subject subject : pupil.subjects()) {
@@ -41,7 +41,7 @@ public class AnalyzeByMap {
             }
         }
         for (String name : map.keySet()) {
-            result.add(new Label(name, map.get(name) / (double)pupils.size()));
+            result.add(new Label(name, map.get(name) / (double) pupils.size()));
         }
         return result;
     }
@@ -51,7 +51,7 @@ public class AnalyzeByMap {
         for (Pupil pupil : pupils) {
             double score = 0;
             for (Subject subject : pupil.subjects()) {
-                score = score + subject.score() ;
+                score = score + subject.score();
             }
             result.add(new Label(pupil.name(), score));
         }
@@ -67,7 +67,7 @@ public class AnalyzeByMap {
                 map.put(subject.name(), score + subject.score());
             }
         }
-        ArrayList<Label> list = new ArrayList<>();
+        List<Label> list = new ArrayList<>();
         for (String name : map.keySet()) {
             list.add(new Label(name, map.get(name)));
         }
