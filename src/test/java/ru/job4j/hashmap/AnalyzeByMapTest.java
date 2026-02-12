@@ -94,6 +94,7 @@ class AnalyzeByMapTest {
                                         new Subject("Lang", 60),
                                         new Subject("Math", 80)
                                 )
+
                         )
                 )
         );
